@@ -1,6 +1,6 @@
 # LeetCode Problem Solutions Repository
 
-![GitHub top language](https://img.shields.io/github/languages/top/your-username/leetcode-solutions?label=Java)
+![GitHub top language](https://img.shields.io/github/languages/top/SwarajShelavale/Leetcode_Problems?label=Java)
 
 **Welcome** to my **LeetCode Problem Solutions** Repository! 🚀
 
