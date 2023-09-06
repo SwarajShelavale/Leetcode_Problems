@@ -1,9 +1,9 @@
 
 //Problem Link : https://leetcode.com/problems/binary-search/
 
+// Difficulty: Easy
 // Time  Complexity : O(LogN)
 // Space Complexity : O(1)
-
 
 //Code:
 class Solution {
