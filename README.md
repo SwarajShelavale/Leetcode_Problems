@@ -1,5 +1,7 @@
 # LeetCode Problem Solutions Repository
 
+![GitHub top language](https://img.shields.io/github/languages/top/your-username/leetcode-solutions?label=Java)
+
 **Welcome** to my **LeetCode Problem Solutions** Repository! 🚀
 
 Are you on a quest to master algorithmic problem-solving and coding challenges? Look no further! This comprehensive repository is your go-to resource for tackling LeetCode problems, conveniently categorized by topics to help you level up your coding skills.
