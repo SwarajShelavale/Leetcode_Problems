@@ -12,12 +12,8 @@ class Solution {
                 {
                     count++;
                     j++;
-                    break;
                 }
-                else
-                { 
-                    break;
-                }
+                break;
             }
             i++;
         }
