@@ -5,7 +5,6 @@ class Solution {
         
         int dp[][] = new int[n+1][m+1];
 
-        int maxLps = 0;
         for(int i=1;i<=n;i++)
         {
             for(int j=1;j<=m;j++)
@@ -13,7 +12,6 @@ class Solution {
                 if(text1.charAt(i-1)==text2.charAt(j-1))
                 {
                    dp[i][j]=1+dp[i-1][j-1];
-                   maxLps=Math.max(maxLps,dp[i][j]);
                 }
                 else
                 {
@@ -22,6 +20,6 @@ class Solution {
             }
         }
 
-        return maxLps;
+        return dp[n][m];
     }
 }
