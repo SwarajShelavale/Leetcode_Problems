@@ -10,6 +10,6 @@ class Solution {
         {
             dp[i]=Math.max(dp[i-1],nums[i]+dp[i-2]);
         }
-        return Math.max(dp[n-1],dp[n-2]);
+        return dp[n-1];
     }
 }
