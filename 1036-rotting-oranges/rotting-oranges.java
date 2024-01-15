@@ -41,6 +41,7 @@ class Solution {
 
                     if(nRow>=0 && nCol>=0 && nRow<m && nCol<n && !visited[nRow][nCol] && grid[nRow][nCol]==1)
                     {
+                        FreshOranges--;
                         visited[nRow][nCol]=true;
                         grid[nRow][nCol]=2;
                         q.add(new Pair(nRow,nCol));
@@ -49,10 +50,8 @@ class Solution {
             }
         }
 
-        for(int i=0;i<m;i++)
-            for(int j=0;j<n;j++)
-                if(grid[i][j]==1)
-                    return -1;
+        if(FreshOranges>0)
+            return -1;
 
         return minutes-1;
     }
