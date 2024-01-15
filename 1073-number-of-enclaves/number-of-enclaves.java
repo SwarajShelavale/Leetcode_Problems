@@ -1,7 +1,8 @@
 class Solution {
     public int numEnclaves(int[][] board) {
         int n=board.length,m=board[0].length;
-         //Convert all Boundry O to #
+
+        //Travel Corners
         for(int i=0;i<n;i++)
         {
             if(board[i][0]==1)
