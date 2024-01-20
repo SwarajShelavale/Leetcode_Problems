@@ -1,61 +1,73 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
-        int N=isConnected.length;
-        // ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>();
-        // for(int i=0;i<N;i++)
-        //     adj.add(new ArrayList<Integer>());
-        
-        // for(int i=0;i<N;i++)
-        // {
-        //     for(int j=0;j<N;j++)
-        //     {
-        //         if(i!=j && isConnected[i][j]==1)
-        //         {
-        //             adj.get(i).add(j);
-        //             adj.get(j).add(i);
-        //         }
-        //     }
-        // }
+        int n = isConnected.length;
 
-        int count = 0;
-        boolean visited[] =  new boolean[N];
-
-        for(int i=0;i<N;i++)
+        UnionFind un = new UnionFind(n);
+        for(int i=0;i<n;i++)
         {
-            if(!visited[i])
+            for(int j=0;j<n;j++)
             {
-                count++;
-                // dfs(i,visited,adj);
-                dfs(i,visited,isConnected);
+                if(i!=j && isConnected[i][j]==1)
+                {
+                    un.unionByRank(i,j);
+                }
             }
         }
 
-        return count;
-    }
-
-    // void dfs(int node,boolean visited[] , ArrayList<ArrayList<Integer>> adj )
-    // {
-    //     visited[node] = true;
-    //     for(int x : adj.get(node))
-    //     {
-    //         if(!visited[x])
-    //             dfs(x,visited,adj);
-    //     }
-    // }
-
-    void dfs(int i,boolean visited[] ,int[][] isConnected)
-    {
-        visited[i] = true;
-        for(int j=0;j<isConnected.length;j++)
-        {
-            if(i!=j && !visited[j] && isConnected[i][j]==1)
-            {
-                    dfs(j,visited,isConnected);
-            } 
-        }
+        return un.unionCount();
     }
 }
 
-// 1 1 0
-// 1 1 0
-// 0 0 1
+
+class UnionFind {
+    int parent[];
+    int rank[];
+
+    UnionFind(int n)
+    {
+        parent = new int[n];
+        rank = new int[n];
+        for(int i=0;i<n;i++)
+        {
+            parent[i]=i;
+            rank[i]=0;
+        }
+    }
+
+    public void unionByRank(int u,int v)
+    {
+        int ulp_u=findParent(u);
+        int ulp_v=findParent(v);
+
+        if(ulp_u == ulp_v)
+            return;
+        
+        if(rank[ulp_u]<rank[ulp_v])
+            parent[ulp_u]=ulp_v;
+        else if(rank[ulp_v]<rank[ulp_u])
+            parent[ulp_v]=ulp_u;
+        else if(rank[ulp_v]==rank[ulp_u]) {
+            parent[ulp_v]=ulp_u;
+            rank[ulp_u]++;
+        }        
+    }
+
+    public int findParent(int u)
+    {
+        if(parent[u]==u)
+            return u;
+
+        return parent[u]=findParent(parent[u]);
+    }
+
+    public int unionCount()
+    {
+        HashSet<Integer> hs = new HashSet<>();
+        for (int i = 0; i < parent.length; i++) {
+            hs.add(findParent(i));
+        }
+
+        return hs.size();
+    }
+
+}
