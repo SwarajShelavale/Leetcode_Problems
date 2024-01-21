@@ -1,13 +1,12 @@
 class Graph {
     int graph[][];
     int n;
-    final int MAX_VALUE = 500_000_000;
     public Graph(int n, int[][] edges) {
         this.n=n;
         graph = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                graph[i][j] = MAX_VALUE;
+                graph[i][j] = (int)1e8;
             }
             graph[i][i] = 0;
         }
@@ -46,7 +45,7 @@ class Graph {
     }
     
     public int shortestPath(int node1, int node2) {
-        if(graph[node1][node2]!=MAX_VALUE)
+        if(graph[node1][node2]!=(int)1e8)
             return graph[node1][node2];
         
         return -1;
