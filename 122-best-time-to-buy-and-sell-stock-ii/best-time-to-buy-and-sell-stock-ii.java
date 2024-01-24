@@ -1,28 +1,21 @@
 class Solution {
-    //States:
-    //      1 - can Buy
-    //      0 - can Sell
-    private int dp[][];
     public int maxProfit(int[] prices) {
-        
-        dp = new int[prices.length][2];
-        for(int i=0;i<prices.length;i++)
-            Arrays.fill(dp[i],-1);
-        return profit(0,prices,1);
-    }
+        int n=prices.length;
 
-    int profit(int index,int[] prices,int state)
-    {
-        if(index==prices.length)
-            return 0;
-        
-        if(dp[index][state]!=-1)
-            return dp[index][state];
+        int dp[][] = new int[n+1][2];
+        //0-can buy
+        //1-can sell
+        for (int i = n-1; i >=0; i--) {
+            int toBuy = -prices[i] + dp[i + 1][1];
+            int notToBuy = dp[i+1][0];
 
-        if(state==1)
-            return dp[index][state]=Math.max(-prices[index]+profit(index+1,prices,0),profit(index+1,prices,1));
-        else
-            return dp[index][state]=Math.max(prices[index]+profit(index+1,prices,1),profit(index+1,prices,0));
-        
+            int toSell = prices[i] + dp[i+1][0];
+            int notToSell = dp[i+1][1];
+
+            dp[i][0] = Math.max(toBuy, notToBuy);
+            dp[i][1] = Math.max(toSell, notToSell);
+        }
+
+        return dp[0][0];
     }
 }
