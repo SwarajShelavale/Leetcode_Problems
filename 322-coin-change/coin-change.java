@@ -3,7 +3,10 @@ class Solution {
         int n = coins.length;
         int dp[][] = new int[n+1][amount+1];
         int maxValue = Integer.MAX_VALUE-1;
-            
+        
+        for(int i=0;i<=n;i++)
+            dp[i][0] = 0 ;
+        
         for(int j=0;j<=amount;j++)
         {
             if((j%coins[0])==0)
