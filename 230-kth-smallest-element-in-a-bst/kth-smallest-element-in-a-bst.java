@@ -14,24 +14,25 @@
  * }
  */
 class Solution {
+    int kthElement = -1;
+    int count=0;
     public int kthSmallest(TreeNode root, int k) {
-        int res[] = {0,-1};     //array is used to achieve call by referance in java
-        inOrder(root,res,k);
-        return res[1];
+        inOrder(root,k);
+        return kthElement;
     }
 
-    void inOrder(TreeNode root,int res[],int k)
+    void inOrder(TreeNode root,int k)
     {
         if(root==null)
             return;
 
-        inOrder(root.left,res,k);
-        res[0]++;
-        if(res[0]==k)
+        inOrder(root.left,k);
+        count++;
+        if(count==k)
         {
-            res[1]=root.val;
+            kthElement=root.val;
             return;
         }
-        inOrder(root.right,res,k);    
+        inOrder(root.right,k);    
     }
 }
