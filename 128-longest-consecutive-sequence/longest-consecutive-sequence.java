@@ -1,85 +1,80 @@
+import java.util.HashMap;
+
 class Solution {
     public int longestConsecutive(int[] nums) {
-        int n =nums.length;
-        
-        if(n<=1)
+        int n = nums.length;
+
+        if (n <= 1)
             return n;
-        
+
         UnionFind uf = new UnionFind(n);
-        HashMap<Integer,Integer> mp = new HashMap<>();
+        HashMap<Integer, Integer> numIndexMap = new HashMap<>();
 
-        for(int i=0;i<n;i++)
-        {
-            if(mp.containsKey(nums[i]))
+        for (int i = 0; i < n; i++) {
+            int currentNum = nums[i];
+            if (numIndexMap.containsKey(currentNum))
                 continue;
-            
-            mp.put(nums[i],i);
 
-            if(mp.containsKey(nums[i]-1))
-                uf.unionByRank(i,mp.get(nums[i]-1));
-            
-            if(mp.containsKey(nums[i]+1))
-                uf.unionByRank(i,mp.get(nums[i]+1));            
+            numIndexMap.put(currentNum, i);
+
+            if (numIndexMap.containsKey(currentNum - 1))
+                uf.unionByRank(i, numIndexMap.get(currentNum - 1));
+
+            if (numIndexMap.containsKey(currentNum + 1))
+                uf.unionByRank(i, numIndexMap.get(currentNum + 1));
         }
 
         return uf.findMax();
-        
     }
 }
 
-
 class UnionFind {
-    int parent[];
-    int rank[];
-    UnionFind(int n)
-    {
-        parent  = new int[n];
-        rank    = new int[n];
+    int[] parent;
+    int[] rank;
 
-        for(int i=0;i<n;i++)
-        {
-            parent[i]=i;
-            rank[i]=1;
+    UnionFind(int n) {
+        parent = new int[n];
+        rank = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            rank[i] = 1;
         }
     }
 
+    public void unionByRank(int u, int v) {
+        int parentU = findParent(u);
+        int parentV = findParent(v);
 
-    public void unionByRank(int u,int v)
-    {
-        int ulp_u=findParent(u);
-        int ulp_v=findParent(v);
-
-        if(ulp_u==ulp_v)
+        if (parentU == parentV)
             return;
-        if(rank[ulp_u] < rank[ulp_v])
-            parent[ulp_u]=ulp_v;
-        else if(rank[ulp_u] > rank[ulp_v])
-            parent[ulp_v]=ulp_u;
-        else 
-        {
-            parent[ulp_u]=ulp_v;
+        if (rank[parentU] < rank[parentV])
+            parent[parentU] = parentV;
+        else if (rank[parentU] > rank[parentV])
+            parent[parentV] = parentU;
+        else {
+            parent[parentU] = parentV;
             rank[v]++;
         }
     }
 
-    public int findParent(int u)
-    {
-        if(parent[u]==u)
+    public int findParent(int u) {
+        if (parent[u] == u)
             return u;
 
-        return parent[u]=findParent(parent[u]);
+        return parent[u] = findParent(parent[u]);
     }
 
-
     public int findMax() {
-        int res = 0;
-        int count[] = new int[rank.length];
-        for(int i=0;i<count.length;i++)
-        {
-            int r = findParent(i);
-            count[r]++;
-            res=Math.max(res,count[r]);
+        int maxCount = 0;
+        int[] count = new int[rank.length];
+
+        for (int i = 0; i < count.length; i++) {
+            int root = findParent(i);
+            count[root]++;
+            maxCount = Math.max(maxCount, count[root]);
         }
-        return res;
+
+        return maxCount;
     }
 }
