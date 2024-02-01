@@ -1,14 +1,4 @@
 class Solution {
-    class Pair {
-        int first;
-        int second;
-
-        public Pair(int first, int second) {
-            this.first = first;
-            this.second = second;
-        }
-    }
-
     public int numIslands(char[][] grid) {
         int count = 0;
         int n = grid.length, m = grid[0].length;
@@ -50,3 +40,13 @@ class Solution {
         }
     }
 }
+
+  class Pair {
+        int first;
+        int second;
+
+        public Pair(int first, int second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
