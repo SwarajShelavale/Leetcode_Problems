@@ -15,10 +15,10 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return helper(0, 0, inorder.length - 1, preorder, inorder);
+        return buildBinaryTree(0, 0, inorder.length - 1, preorder, inorder);
     }
 
-    public TreeNode helper(int preStart, int inStart, int inEnd, int[] preorder, int[] inorder) {
+    public TreeNode buildBinaryTree(int preStart, int inStart, int inEnd, int[] preorder, int[] inorder) {
         if (preStart > preorder.length - 1 || inStart > inEnd) {
             return null;
         }
@@ -29,8 +29,8 @@ class Solution {
                 inIndex = i;
             }
         }
-        root.left = helper(preStart + 1, inStart, inIndex - 1, preorder, inorder);
-        root.right = helper(preStart + inIndex - inStart + 1, inIndex + 1, inEnd, preorder, inorder);
+        root.left = buildBinaryTree(preStart + 1, inStart, inIndex - 1, preorder, inorder);
+        root.right = buildBinaryTree(preStart + inIndex - inStart + 1, inIndex + 1, inEnd, preorder, inorder);
         return root;
     }
 }
