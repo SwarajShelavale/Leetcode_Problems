@@ -3,7 +3,10 @@ class Solution {
         long quotient = 0;
         int sign = 1;
         int max = Integer.MAX_VALUE,  min = Integer.MIN_VALUE;
-        if(dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0)sign = -1;
+
+        if(dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0)
+            sign = -1;
+            
         long dd = (long)dividend , dv = (long)divisor;
         dd = Math.abs(dd);dv = Math.abs(dv);
         while(dd >= dv){
