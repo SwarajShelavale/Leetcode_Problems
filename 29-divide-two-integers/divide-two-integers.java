@@ -1,18 +1,24 @@
 class Solution {
-     public int divide(int dividend, int divisor) {
-        if (dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MAX_VALUE; //Cornor case when -2^31 is divided by -1 will give 2^31 which doesnt exist so overflow 
-         
-        boolean negative = dividend < 0 ^ divisor < 0; //Logical XOR will help in deciding if the results is negative only if any one of them is negative
-        
-        dividend = Math.abs(dividend);
-        divisor = Math.abs(divisor);
-        int quotient = 0, subQuot = 0;
-        
-        while (dividend - divisor >= 0) {
-            for (subQuot = 0; dividend - (divisor << subQuot << 1) >= 0; subQuot++);
-            quotient += 1 << subQuot; //Add to the quotient
-            dividend -= divisor << subQuot; //Substract from dividend to start over with the remaining
+    public int divide(int dividend, int divisor) {
+        long quotient = 0;
+        int sign = 1;
+        int max = Integer.MAX_VALUE,  min = Integer.MIN_VALUE;
+        if(dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0)sign = -1;
+        long dd = (long)dividend , dv = (long)divisor;
+        dd = Math.abs(dd);dv = Math.abs(dv);
+        while(dd >= dv){
+            int shift = 0;
+            while(dd >= (dv<<shift))shift++;
+            quotient += (long)1l<<(shift-1);
+            // System.out.println(quotient+"-"+shift);
+            dd -= dv<<(shift-1);
         }
-        return negative ? -quotient : quotient;
+        if(sign == 1){
+            if(quotient > max)return max;
+            return (int)quotient;
+        }else{
+            if((~quotient)+1 < min)return min; // ~quotient+1 = -quotient
+            return (int)(~quotient)+1;
+        }
     }
 }
