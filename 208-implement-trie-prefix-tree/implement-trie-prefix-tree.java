@@ -1,58 +1,67 @@
+class Node {
+    Node[] charArray = new Node[26];
+    boolean isEnd = false;
+
+    boolean containsKey(char ch) {
+        return charArray[ch - 'a'] != null;
+    }
+
+    void put(char ch, Node root) {
+        charArray[ch - 'a'] = root;
+    }
+
+    Node get(char ch) {
+        return charArray[ch - 'a'];
+    }
+
+    void setEnd() {
+        isEnd = true;
+    }
+
+    boolean isEnd() {
+        return isEnd;
+    }
+}
+
 class Trie {
-    Node root;
+    private static Node root;
 
     public Trie() {
         root = new Node();
     }
-    
+
     public void insert(String word) {
-        root.insert(word, 0);
-    }
-    
-    public boolean search(String word) {
-        return root.search(word, 0);
-    }
-    
-    public boolean startsWith(String prefix) {
-        return root.startsWith(prefix, 0);
-    }
-
-    class Node {
-        Node[] nodes;
-        boolean isEnd;
-
-        Node() {
-            nodes = new Node[26];
-        }
-
-        private void insert(String word, int idx) {
-            if (idx >= word.length()) return;
-            int i = word.charAt(idx) - 'a';
-            if (nodes[i] == null) {
-                nodes[i] = new Node();
+        Node node = root;
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if (!node.containsKey(ch)) {
+                node.put(ch, new Node());
             }
-
-            if (idx == word.length()-1) nodes[i].isEnd = true;
-            nodes[i].insert(word, idx+1);
+            node = node.get(ch);
         }
+        node.setEnd();
+    }
 
-        private boolean search(String word, int idx) {
-            if (idx >= word.length()) return false;
-            Node node = nodes[word.charAt(idx) - 'a'];
-            if (node == null) return false;
-            if (idx == word.length() - 1 && node.isEnd) return true;
-
-            return node.search(word, idx+1);
-
+    public boolean search(String word) {
+        Node node = root;
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if (!node.containsKey(ch))
+                return false;
+            node = node.get(ch);
         }
+        return node.isEnd();
+    }
 
-        private boolean startsWith(String prefix, int idx) {
-            if (idx >= prefix.length()) return false;
-            Node node = nodes[prefix.charAt(idx) - 'a'];
-            if (node == null) return false;
-            if (idx == prefix.length() - 1) return true;
-
-            return node.startsWith(prefix, idx+1);
+    public boolean startsWith(String prefix) {
+        Node node = root;
+        for (int i = 0; i < prefix.length(); i++) {
+            char ch = prefix.charAt(i);
+            if (!node.containsKey(ch))
+                return false;
+            node = node.get(ch);
         }
+        return true;
     }
 }
+
