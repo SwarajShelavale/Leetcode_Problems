@@ -16,4 +16,5 @@ public:
         }
         return 4*count-repeat*2;
     }
+    
 };
