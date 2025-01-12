@@ -1,39 +1,48 @@
 class Solution {
     public void setZeroes(int[][] matrix) {
-        int n=matrix.length,m=matrix[0].length;
+        int n = matrix.length , m = matrix[0].length;
+        boolean rows[] = new boolean[n];   //{true,false,false}
+        boolean cols[] = new boolean[m];   //{true,false,false,true}
 
-        int col0=1;
-
-        //Mark all elements
+        // Check all zero occurances
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(matrix[i][j]==0){
-                    //set 0th row
-                    matrix[i][0]=0;
-                    //set 0th Col
-                    if(j==0)
-                        col0=0;
-                    else
-                        matrix[0][j]=0;
+                if(matrix[i][j]==0)
+                {
+                    rows[i]=true;
+                    cols[j]=true;
                 }
             }
         }
 
-        for(int i=1;i<n;i++)
-            for(int j=1;j<m;j++)
-                if(matrix[i][j]!=0)
-                    if(matrix[i][0]==0 || matrix[0][j]==0)
-                        matrix[i][j]=0;
+        // Update rows and cols on basis of zeroes
 
-        if(matrix[0][0]==0)
+        for(int i=0;i<n;i++)
+        {
             for(int j=0;j<m;j++)
-                matrix[0][j]=0;
+            {
+                if(rows[i] || cols[j])
+                {
+                    matrix[i][j]=0;
+                }
+            }
+        }
         
-        if(col0==0)
-            for(int i=0;i<n;i++)
-                matrix[i][0]=0;
-
     }
 }
+
+
+
+// 0 0 0 0
+// 3 4 5 2
+// 1 2 1 5
+
+// 0 --> 0,0
+// 1     0,1
+// 2     0,2
+// 0     0,3
+
+// 3  --> 1,0
+// 4  --> 1,1
