@@ -15,3 +15,8 @@ class Solution {
         return flippedImage;
     }
 }
+
+//   flippedImage[i][index]=(image[i][j]==1) ? 0:1;
+//Set 1st col to last col then.. if it's flipped
+// 0 --> 1
+// 1 --> 0
