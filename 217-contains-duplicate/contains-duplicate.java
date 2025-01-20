@@ -3,12 +3,11 @@ class Solution {
         Map<Integer,Integer> mp = new HashMap<>();
         
         for(int x:nums){
-            mp.put(x,mp.getOrDefault(x,0)+1);
-        }
-        
-        for(int val:mp.values()){
-            if(val > 1)
+            if(mp.containsKey(x))
+            {
                 return true;
+            }
+            mp.put(x,1);
         }
         return false;
     }
